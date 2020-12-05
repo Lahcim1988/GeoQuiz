@@ -26,6 +26,7 @@ public class CheatActivity extends AppCompatActivity {
 
     private TextView mAnswerTextView;
     private Button mShowAnswerButton;
+    private TextView mAPIVersionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,16 @@ public class CheatActivity extends AppCompatActivity {
 
         mAnswerIsTrue = getIntent().getBooleanExtra(EXTRA_ANSWER_IS_TRUE, false);
 
-        mAnswerTextView = (TextView) findViewById(R.id.show_answer_button);
-        mAnswerTextView.setOnClickListener(new View.OnClickListener() {
-            //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+        mAnswerTextView = (TextView) findViewById(R.id.answer_text_view);
+
+        mAPIVersionTextView = (TextView) findViewById(R.id.api_version_text_view);
+        //mAPIVersionTextView.setText("API level is: " + Build.VERSION.SDK_INT);
+        mAPIVersionTextView.setText(getString(R.string.apiLevel, Build.VERSION.RELEASE));
+
+
+        mShowAnswerButton = (Button) findViewById(R.id.show_answer_button);
+        mShowAnswerButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 if(mAnswerIsTrue){
@@ -47,19 +55,19 @@ public class CheatActivity extends AppCompatActivity {
                 setAnswerShownResult(true);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    int cx = mShowAnswerButton.getWidth() / 2;
-                    int cy = mShowAnswerButton.getHeight() / 2;
-                    float radius = mShowAnswerButton.getWidth();
-
-                    Animator anim = ViewAnimationUtils.createCircularReveal(mShowAnswerButton, cx, cy, radius, 0);
-                    anim.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            mShowAnswerButton.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                    anim.start();
+                int cx = mShowAnswerButton.getWidth() / 2;
+                int cy = mShowAnswerButton.getHeight() / 2;
+                float radius = mShowAnswerButton.getWidth();
+                Animator anim = ViewAnimationUtils
+                        .createCircularReveal(mShowAnswerButton, cx, cy, radius, 0);
+                anim.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        mShowAnswerButton.setVisibility(View.INVISIBLE);
+                    }
+                });
+                anim.start();
                 }else {
                     mAnswerTextView.setVisibility(View.INVISIBLE);
                 }

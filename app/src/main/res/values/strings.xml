@@ -18,4 +18,6 @@
     <string name="cheat_button">Podpowiedź</string>
     <string name="judgment_toast">Oszukiwanie jest złe!</string>
     <string name="answer">Odpowiedz</string>
+    <string name="apiLevel">API level %1$s</string>
+    <string name="remaining_cheats_count">Allowed Cheats: %1$d</string>
 </resources>
